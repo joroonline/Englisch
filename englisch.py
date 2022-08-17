@@ -1,28 +1,22 @@
 #import sqlite3
 
-def database():
-    #connection = sqlite3.connect('Database_english_german')
-    #cursur = connection.cursor()
-    #return cursur
-    pass
+def get_input():
+    english = str(input("Please write a english word in this line: "))
+    german = str(input("Please write a german word in this line: "))
+    try:
+        return [english, german]
+    except ValueError:
+        print("Error! Please write this word again.")
 
-def new_vocabulary():
-    while True:
-        german = str(input("Please write a german word in this line: "))
-        english = str(input("Please write a english word in this line: "))
-        try:
-            return [german, english]
-        except ValueError:
-            print("Please write this words again!")
+class Vocabulary():
 
-def get_id():
-    pass
+    def __init__(self, vocabulary=None):
+        if vocabulary is None:
+            vocabulary = get_input()
+        for s in range(len(vocabulary)):
+            self.english = vocabulary[0]
+            self.german = vocabulary[1]
 
-#def new_voc_init(new_vocabulary):
-#    for x, y in enumerate(new_vocabulary):
-#        print(f"{x+1}. {y}")
+get = Vocabulary()
 
-if __name__ == "__main__":
-    print(x for x, y in enumerate(new_vocabulary()))
-
-#cursur.execute()
+print(get.german)
