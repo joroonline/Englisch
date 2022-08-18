@@ -60,15 +60,3 @@ get = Vocabulary()
 #get.connect.commit()
 #get.connect.close()
 get.delete_vocabulary()
-
-
-def delete_vocabulary(self):
-    for data in self.get_vocabulary():
-        print(f'ID {data[0]}: {data[1]}, {data[2]}')
-    if self.get_vocabulary() is None:
-        user = input("Please write the id from the vocabulary that you'll remove: ")
-        self.cusor.execute('DELETE FROM vokabeln WHERE id = ?', [user])
-        self.connect.commit()
-        self.connect.close()
-    else:
-        print("None")
