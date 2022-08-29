@@ -27,11 +27,13 @@ class Vocabulary():
         self.connect.close()
 
     def delete_vocabulary(self):
+        count = 1
         for data in self.get_vocabulary():
-            print(f'ID {data[0]}: {data[1]}, {data[2]}')
-        if self.get_vocabulary() is None:
+            print(f'{count}: {data[1]}, {data[2]}')
+            count += 1
+        if self.get_vocabulary() is not None:
             user = input("Please write the id from the vocabulary that you'll remove: ")
-            self.cusor.execute('DELETE FROM vokabeln WHERE id = ?', [user])
+            self.cusor.execute('DELETE FROM vokabeln WHERE english = ?', [user])
             self.connect.commit()
             self.connect.close()
         else:
