@@ -11,8 +11,29 @@ class Commands():
             print("Error! Please write your command again.")
 
     def init_command(self):
-        for i in self.command:
-            pass
+        do = self.command.split(" ")
+        for i in range(len(do)):
+            if do[1] == "help":
+                return do[1]
+            if do[1] == "delete":
+                get.delete_vocabulary()
+            if do[1] == "new":
+                get.new_vocabulary()
+            if do[1] == "start":
+                get.start_questions()
+
+    def help(self):
+        return "Prefix"
+
+    def delete_vocabulary(self):
+        pass
+
+    def new_vocabulary(self):
+        pass
+
+    def start_questions(self):
+        pass
 
 get = Commands()
 print(get.get_command())
+print(get.init_command())

@@ -1,13 +1,8 @@
-import random
-
-list = [random.randint(1,9) for i in range(10)]
-print(list)
-
-index = 0
-for i in range(len(list)):
-    if index >= list[i+1]:
-        list[index], list[i+1] = list[i+1], list[index]
+zahlen = "-help"
+for i in range(0, len(zahlen), 1):
+    if i == 0:
+        print(zahlen[0])
     else:
-        index += 1
+        _return = ''.join(zahlen[1])
 
-print(list)
+print(_return)
