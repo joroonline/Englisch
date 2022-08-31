@@ -4,7 +4,7 @@ class Commands():
         pass
 
     def get_command(self):
-        self.command = str(input("What would you do? Please write your command here (-help for informations) ->  "))
+        self.command = str(input("What would you do? Please write your command here (-help for informations) -> "))
         try:
             return self.command
         except ValueError:
@@ -14,7 +14,7 @@ class Commands():
         do = self.command.split(" ")
         for i in range(len(do)):
             if do[1] == "help":
-                return do[1]
+                get.help()
             if do[1] == "delete":
                 get.delete_vocabulary()
             if do[1] == "new":
@@ -23,7 +23,8 @@ class Commands():
                 get.start_questions()
 
     def help(self):
-        return "Prefix"
+        i = "True"
+        return i
 
     def delete_vocabulary(self):
         pass
