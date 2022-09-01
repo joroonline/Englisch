@@ -51,6 +51,9 @@ class Vocabulary():
     def seach_vocabulary(self):
         pass
 
+    def create_unit(self):
+        pass
+
 
 get = Vocabulary()
 #get.init_vocabulary()

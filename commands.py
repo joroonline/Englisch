@@ -11,16 +11,22 @@ class Commands():
             print("Error! Please write your command again.")
 
     def init_command(self):
-        do = self.command.split(" ")
-        for i in range(len(do)):
-            if do[1] == "help":
-                get.help()
-            if do[1] == "delete":
-                get.delete_vocabulary()
-            if do[1] == "new":
-                get.new_vocabulary()
-            if do[1] == "start":
-                get.start_questions()
+        _command = get.get_command()
+        _return = ""
+        for i in range(0, len(_command), 1):
+            if i == 0:
+                if _command[0] == "-":
+                    pass
+                else:
+                    print(f"Error! Please write your prefix from '{_command[0]}' to '-'")
+                    get.get_command()
+            else:
+                _return = _return + str(get.get_command()[i])
+
+        if _return == "help":
+            get.help()
+        elif _return == "delete":
+            get.delete_vocabulary()
 
     def help(self):
         i = "True"
@@ -36,5 +42,4 @@ class Commands():
         pass
 
 get = Commands()
-print(get.get_command())
 print(get.init_command())
