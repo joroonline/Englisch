@@ -11,29 +11,32 @@ class Commands():
             print("Error! Please write your command again.")
 
     def init_command(self):
-        _command = get.get_command()
-        _return = ""
+        while True:
+            _command = get.get_command()
+            _return = ""
 
-        if _command.split(' ')[0] == _command.split(' ')[0]:
-            for i in range(0, len(_command), 1):
-                if i == 0:
-                    if _command[0] == "-":
-                        pass
+            if _command.split(' ')[0] == _command.split(' ')[0]:
+                for i in range(0, len(_command), 1):
+                    if i == 0:
+                        if _command[0] == "-":
+                            pass
+                        else:
+                            print(f"Error! Please write your prefix from '{_command[0]}' to '-'")
+                            get.get_command()
                     else:
-                        print(f"Error! Please write your prefix from '{_command[0]}' to '-'")
-                        get.get_command()
-                else:
-                    _return = _return + str(_command[i])
-        else:
-            print("Error!")
+                        _return = _return + str(_command[i])
+            else:
+                print("Error!")
 
-        if _return == "help":
-            return get.help()
-        elif _return == "delete":
-            print("True")
-            return get.delete()
-        else:
-            print(_return)
+            if _return == "help":
+                print(get.help())
+            elif _return == "delete":
+                print("True")
+                return get.delete()
+            elif _return == "stop":
+                return "You stopped the Vocabulary-trainer!"
+            else:
+                print(_return)
 
     def help(self):
         i = """
