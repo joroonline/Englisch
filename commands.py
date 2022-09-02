@@ -21,18 +21,22 @@ class Commands():
                     print(f"Error! Please write your prefix from '{_command[0]}' to '-'")
                     get.get_command()
             else:
-                _return = _return + str(get.get_command()[i])
+                _return = _return + str(_command[i])
 
         if _return == "help":
-            get.help()
+            return get.help()
         elif _return == "delete":
-            get.delete_vocabulary()
+            return get.delete()
 
     def help(self):
-        i = "True"
+        i = """
+        Commands:
+        -help -> print all commands
+        -delete <unit/vocabulary> <name of the unit or vocabulary> -> delete a unit or vocabulary
+        """
         return i
 
-    def delete_vocabulary(self):
+    def delete(self):
         pass
 
     def new_vocabulary(self):
