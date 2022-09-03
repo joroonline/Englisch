@@ -33,8 +33,9 @@ class Commands():
             if _return.split(' ')[0] == "help":
                 print(get.help())
             elif _return.split(' ')[0] == "delete":
-                print("discord")
                 get.delete(_return)
+            elif _return.split(' ')[0] == "new":
+                get.new_vocabulary()
             elif _return.split(' ')[0] == "stop":
                 return "You stopped the Vocabulary-trainer!"
             else:
@@ -54,7 +55,7 @@ class Commands():
             englisch.Vocabulary.delete_vocabulary()
 
     def new_vocabulary(self):
-        pass
+        englisch.Vocabulary.init_vocabulary()
 
     def start_questions(self):
         pass

@@ -14,14 +14,14 @@ class Vocabulary():
         self.connect = sqlite3.connect('Database_englisch_german')
         self.cusor = self.connect.cursor()
         self.combo = 0
-        self.id  = 0
+        self.vocabulary = None
 
-    def init_vocabulary(self, vocabulary=None):
-        if vocabulary is None:
-            vocabulary = get.get_input()
-        for s in range(len(vocabulary)):
-            self.english = vocabulary[0]
-            self.german = vocabulary[1]
+    def init_vocabulary(self):
+        if self.vocabulary is None:
+            self.vocabulary = get.get_input()
+        for s in range(len(self.vocabulary)):
+            self.english = self.vocabulary[0]
+            self.german = self.vocabulary[1]
         self.cusor.execute('INSERT INTO vokabeln (english, german, combo) VALUES (?, ?, ?)', [self.english, self.german, self.combo])
         self.connect.commit()
         self.connect.close()
@@ -54,14 +54,14 @@ class Vocabulary():
     def create_unit(self):
         pass
 
-
-get = Vocabulary()
-#get.init_vocabulary()
-#_list = []
-#for dsatz in get.get_vocabulary():
-#    _list.append(dsatz[0])
-#print(_list)
-#print(get.serch_id())
-#get.connect.commit()
-#get.connect.close()
-get.delete_vocabulary()
+if __name__ == "__main__":
+    get = Vocabulary()
+    #get.init_vocabulary()
+    #_list = []
+    #for dsatz in get.get_vocabulary():
+    #    _list.append(dsatz[0])
+    #print(_list)
+    #print(get.serch_id())
+    #get.connect.commit()
+    #get.connect.close()
+    #get.delete_vocabulary()
