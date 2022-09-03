@@ -1,3 +1,5 @@
+import englisch
+
 class Commands():
 
     def __init__(self):
@@ -28,12 +30,12 @@ class Commands():
             else:
                 print("Error!")
 
-            if _return == "help":
+            if _return.split(' ')[0] == "help":
                 print(get.help())
-            elif _return == "delete":
-                print("True")
-                return get.delete()
-            elif _return == "stop":
+            elif _return.split(' ')[0] == "delete":
+                print("discord")
+                get.delete(_return)
+            elif _return.split(' ')[0] == "stop":
                 return "You stopped the Vocabulary-trainer!"
             else:
                 print(_return)
@@ -43,11 +45,13 @@ class Commands():
         Commands:
         -help -> print all commands
         -delete <unit/vocabulary> <name of the unit or vocabulary> -> delete a unit or vocabulary
+        -stop -> stoppt die while schleife
         """
         return i
 
-    def delete(self):
-        pass
+    def delete(self, command):
+        if command.split(' ')[1] == "vocabulary":
+            englisch.Vocabulary.delete_vocabulary()
 
     def new_vocabulary(self):
         pass
