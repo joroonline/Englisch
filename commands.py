@@ -1,4 +1,4 @@
-import englisch
+from Englisch import englisch.Vocabulary
 
 class Commands():
 
