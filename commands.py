@@ -1,9 +1,10 @@
-from Englisch import englisch.Vocabulary
+from englisch import Vocabulary
+# rich
 
-class Commands():
+class Commands:
 
     def __init__(self):
-        pass
+        self.vocabulary = Vocabulary()
 
     def get_command(self):
         self.command = str(input("What would you do? Please write your command here (-help for informations) -> "))
@@ -52,13 +53,14 @@ class Commands():
 
     def delete(self, command):
         if command.split(' ')[1] == "vocabulary":
-            englisch.Vocabulary.delete_vocabulary()
+            self.vocabulary.delete_vocabulary()
 
     def new_vocabulary(self):
-        englisch.Vocabulary.init_vocabulary()
+        self.vocabulary.init_vocabulary()
 
     def start_questions(self):
         pass
+
 
 get = Commands()
 print(get.init_command())

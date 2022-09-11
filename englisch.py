@@ -1,6 +1,16 @@
 import sqlite3
 
-class Vocabulary():
+
+def get_input():
+    english = str(input("Please write a english word in this line: "))
+    german = str(input("Please write a german word in this line: "))
+    try:
+        return [english, german]
+    except ValueError:
+        print("Error! Please write this word again.")
+
+
+class Vocabulary:
     def __init__(self):
         self.connect = sqlite3.connect('Database_englisch_german')
         self.cusor = self.connect.cursor()
@@ -9,24 +19,15 @@ class Vocabulary():
         self.german = ""
         self.vocabulary = None
 
-    def get_input(self):
-        self.english = str(input("Please write a english word in this line: "))
-        self.german = str(input("Please write a german word in this line: "))
-        try:
-            return [self.english, self.german]
-        except ValueError:
-            print("Error! Please write this word again.")
-
     def init_vocabulary(self):
         if self.vocabulary is None:
-            self.vocabulary = get.get_input()
+            self.vocabulary = get_input()
         for s in range(len(self.vocabulary)):
             self.english = self.vocabulary[0]
             self.german = self.vocabulary[1]
         self.cusor.execute('INSERT INTO vokabeln (english, german, combo) VALUES (?, ?, ?)',
                            [self.english, self.german, self.combo])
         self.connect.commit()
-        self.connect.close()
 
     def delete_vocabulary(self):
         count = 1
@@ -38,7 +39,6 @@ class Vocabulary():
             user = input("Please write the english vocabulary that you'll remove: ")
             self.cusor.execute('DELETE FROM vokabeln WHERE english = ?', [user])
             self.connect.commit()
-            self.connect.close()
         else:
             print("You doesn't have any vocabulary in your database!")
 
@@ -50,16 +50,3 @@ class Vocabulary():
 
     def create_unit(self):
         pass
-
-
-if __name__ == "__main__":
-    get = Vocabulary()
-    get.init_vocabulary()
-    # _list = []
-    # for dsatz in get.get_vocabulary():
-    #    _list.append(dsatz[0])
-    # print(_list)
-    # print(get.serch_id())
-    # get.connect.commit()
-    # get.connect.close()
-    # get.delete_vocabulary()
