@@ -1,4 +1,6 @@
 import sqlite3
+from time import time
+from random import randint
 
 
 def get_input():
@@ -44,6 +46,12 @@ class Vocabulary:
 
     def get_vocabulary(self):
         return self.cusor.execute('SELECT * FROM vokabeln')
+
+    def start_questions(self, time):
+        if self.get_vocabulary() == None:
+            print(False)
+        else:
+            print(True)
 
     def seach_vocabulary(self):
         pass

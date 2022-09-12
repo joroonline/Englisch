@@ -1,3 +1,7 @@
+#! /usr/bin/python3.10
+# -*- coding: utf-8 -*-
+
+
 from englisch import Vocabulary
 # rich
 
@@ -7,15 +11,15 @@ class Commands:
         self.vocabulary = Vocabulary()
 
     def get_command(self):
-        self.command = str(input("What would you do? Please write your command here (-help for informations) -> "))
+        command = str(input("What would you do? Please write your command here (-help for information's) -> "))
         try:
-            return self.command
+            return command
         except ValueError:
             print("Error! Please write your command again.")
 
     def init_command(self):
         while True:
-            _command = get.get_command()
+            _command = self.get_command()
             _return = ""
 
             if _command.split(' ')[0] == _command.split(' ')[0]:
@@ -32,11 +36,13 @@ class Commands:
                 print("Error!")
 
             if _return.split(' ')[0] == "help":
-                print(get.help())
+                self.help()
             elif _return.split(' ')[0] == "delete":
-                get.delete(_return)
+                self.delete(_return)
             elif _return.split(' ')[0] == "new":
-                get.new_vocabulary()
+                self.new_vocabulary()
+            elif _return.split(' ')[0] == "start":
+                self.start_questions(_return.split(' ')[1])
             elif _return.split(' ')[0] == "stop":
                 return "You stopped the Vocabulary-trainer!"
             else:
@@ -47,7 +53,7 @@ class Commands:
         Commands:
         -help -> print all commands
         -delete <unit/vocabulary> <name of the unit or vocabulary> -> delete a unit or vocabulary
-        -stop -> stoppt die while schleife
+        -stop -> stop the while loop
         """
         return i
 
@@ -58,7 +64,15 @@ class Commands:
     def new_vocabulary(self):
         self.vocabulary.init_vocabulary()
 
-    def start_questions(self):
+    def start_questions(self, command):
+        try:
+            int(command)
+            print(command)
+            self.vocabulary.start_questions(command)
+        except ValueError:
+            print("Something went wrong.")
+
+    def test_mode(self):
         pass
 
 
