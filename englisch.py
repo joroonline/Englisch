@@ -47,14 +47,27 @@ class Vocabulary:
     def get_vocabulary(self):
         return self.cusor.execute('SELECT * FROM vokabeln')
 
-    def start_questions(self, time):
-        if self.get_vocabulary() == None:
-            print(False)
-        else:
-            print(True)
+    def start_questions(self, time, vocabulary):
+        if vocabulary is not False:
+            english = vocabulary[0]
+            german = vocabulary[1]
+            combo = vocabulary[2]
 
     def seach_vocabulary(self):
-        pass
+        english_list = []
+        german_list = []
+        combo_list = []
+        for data in self.get_vocabulary():
+            english_list.append(data[0])
+            german_list.append(data[1])
+            combo_list.append(data[2])
+        return english_list, german_list, combo_list
 
     def create_unit(self):
         pass
+
+
+if __name__ == "__main__":
+    get = Vocabulary()
+    # get.init_vocabulary()
+    print(get.seach_vocabulary())
