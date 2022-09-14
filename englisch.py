@@ -1,15 +1,15 @@
+import random
 import sqlite3
-from time import time
-from random import randint
+import time
 
 
 def get_input():
-    english = str(input("Please write a english word in this line: "))
-    german = str(input("Please write a german word in this line: "))
+    english = str(input("Bitte schreiben Sie ein Englisches Wort in diese Zeile: "))
+    german = str(input("Bitte schreiben Sie ein Deutsches Wort in diese Zeile: "))
     try:
         return [english, german]
     except ValueError:
-        print("Error! Please write this word again.")
+        print("Error! Bitte schreiben Sie diese Wörter erneut.")
 
 
 class Vocabulary:
@@ -38,20 +38,37 @@ class Vocabulary:
             count += 1
         if self.get_vocabulary() is not None:
             print("True")
-            user = input("Please write the english vocabulary that you'll remove: ")
+            user = input("Bitte schreiben Sie die Englische Vokabel in diese Zeile "
+                         "um diese aus der Datenbank zu entfernen: ")
             self.cusor.execute('DELETE FROM vokabeln WHERE english = ?', [user])
             self.connect.commit()
         else:
-            print("You doesn't have any vocabulary in your database!")
+            print("Du hast keine Vokabeln in deiner Datenbank!")
 
     def get_vocabulary(self):
         return self.cusor.execute('SELECT * FROM vokabeln')
 
-    def start_questions(self, time, vocabulary):
-        if vocabulary is not False:
-            english = vocabulary[0]
-            german = vocabulary[1]
-            combo = vocabulary[2]
+    def start_questions(self, minutes):
+        start = time.time()
+        vocabulary = self.seach_vocabulary()
+
+        while round(time.time()-start) < int(minutes) * 60:
+            ger_or_en = random.randint(1,2)
+            rand = random.randint(0, len(vocabulary[1])-1)
+            if ger_or_en == 1:
+                print(vocabulary[0][1])
+                ger = input("Bitte schreiben Sie diese Übersetzung in diese Zeile: ")
+                if ger == vocabulary[1][rand]:
+                    print("It's correct :)")
+                else:
+                    print(f"Es ist Falsch! Das richtige wort wäre {vocabulary[1][rand]}")
+            if ger_or_en == 2:
+                print(vocabulary[1][rand])
+                en = input("Bitte schreiben Sie diese Übersetzung in diese Zeile: ")
+                if en == vocabulary[0][rand]:
+                    print("It's correct :)")
+                else:
+                    print(f"Es ist Falsch! Das richtige wort wäre {vocabulary[0][rand]}")
 
     def seach_vocabulary(self):
         english_list, german_list, combo_list = [], [], []
@@ -61,6 +78,12 @@ class Vocabulary:
 
     def create_unit(self):
         pass
+
+    def list_vocabulary(self):
+        count = 1
+        for data in self.get_vocabulary():
+            print(f'{count}: {data[0]}, {data[1]}')
+            count += 1
 
 
 if __name__ == "__main__":

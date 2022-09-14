@@ -5,17 +5,19 @@
 from englisch import Vocabulary
 # rich
 
+
 class Commands:
 
     def __init__(self):
         self.vocabulary = Vocabulary()
 
     def get_command(self):
-        command = str(input("What would you do? Please write your command here (-help for information's) -> "))
+        command = str(input("Was wollen Sie tun? Bitte schreiben Sie dazu Ihren Command in die Zeile "
+                            "(-help für mehr Informationen) -> "))
         try:
             return command
         except ValueError:
-            print("Error! Please write your command again.")
+            print("Error! Bitte schreiben sie Ihren command neu in die Zeile.")
 
     def init_command(self):
         while True:
@@ -28,7 +30,7 @@ class Commands:
                         if _command[0] == "-":
                             pass
                         else:
-                            print(f"Error! Please write your prefix from '{_command[0]}' to '-'")
+                            print(f"Error! Bitte schreibe den Prefix von '{_command[0]}' zu '-'")
                             get.get_command()
                     else:
                         _return = _return + str(_command[i])
@@ -36,24 +38,30 @@ class Commands:
                 print("Error!")
 
             if _return.split(' ')[0] == "help":
-                self.help()
+                print(self.help())
             elif _return.split(' ')[0] == "delete":
                 self.delete(_return)
             elif _return.split(' ')[0] == "new":
                 self.new_vocabulary()
             elif _return.split(' ')[0] == "start":
                 self.start_questions(_return.split(' ')[1])
+            elif _return.split(' ')[0] == "list":
+                self.list()
             elif _return.split(' ')[0] == "stop":
-                return "You stopped the Vocabulary-trainer!"
+                return "Sie haben erfolgreich Ihren Vokabel-Trainer beendet!"
             else:
                 print(_return)
 
     def help(self):
         i = """
-        Commands:
-        -help -> print all commands
-        -delete <unit/vocabulary> <name of the unit or vocabulary> -> delete a unit or vocabulary
-        -stop -> stop the while loop
+        alle Commands:
+        -help -> Printet alle Commands
+        -new -> erstelle eine neue Vokabel
+        -delete <vocabulary> -> Lösche eine Vokabel aus der Datenbank
+        -list -> listet alle Vokabeln auf
+        -start <Zeit in Minuten> -> fragt dich in diesen angegebenen 
+         Minuten alle eingetragenen Vokabeln aus der Datenbank aus
+        -stop -> Stoppt den Vokabeltrainer
         """
         return i
 
@@ -70,10 +78,13 @@ class Commands:
             print(command)
             self.vocabulary.start_questions(command)
         except ValueError:
-            print("Something went wrong.")
+            print("Etwas ist schiefgelaufen beim starten der Fragen!")
 
     def test_mode(self):
         pass
+
+    def list(self):
+        self.vocabulary.list_vocabulary()
 
 
 get = Commands()
