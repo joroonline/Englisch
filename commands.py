@@ -7,7 +7,6 @@ from englisch import Vocabulary
 
 
 class Commands:
-
     def __init__(self):
         self.vocabulary = Vocabulary()
 

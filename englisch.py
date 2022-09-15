@@ -61,20 +61,24 @@ class Vocabulary:
         if vocabulary != None:
             start = time.time()
             while round(time.time()-start) < int(minutes) * 60:
-                rand = random.randint(0, len(vocabulary)-1)
+                rand = self.random_voc(vocabulary)
                 if random.randint(1,2) == 1:
                     print(vocabulary[0][1])
                     ger = input("Bitte schreiben Sie diese Übersetzung in diese Zeile: ")
                     if ger == vocabulary[1][rand]:
-                        print("It's correct :)")
+                        vocabulary[2][rand] += 1
+                        print("Es ist richtig :)")
                     else:
+                        vocabulary[2][rand] = 0
                         print(f"Es ist Falsch! Das richtige wort wäre {vocabulary[1][rand]}")
                 else:
                     print(vocabulary[1][rand])
                     en = input("Bitte schreiben Sie diese Übersetzung in diese Zeile: ")
                     if en == vocabulary[0][rand]:
+                        vocabulary[2][rand] += 1
                         print("It's correct :)")
                     else:
+                        vocabulary[2][rand] = 0
                         print(f"Es ist Falsch! Das richtige wort wäre {vocabulary[0][rand]}")
         else:
             print("Du hast keine Vokabeln in deiner Datenbank!")
@@ -89,8 +93,15 @@ class Vocabulary:
         else:
             return None
 
-    def create_unit(self):
-        pass
+    def random_voc(self, vocabulary):
+        while True:
+            rand = random.randint(0, vocabulary[0]-1)
+            combo = vocabulary[2][rand]
+            if combo >= 10:
+                vocabulary[2][rand] = 10
+                combo = 10
+            if random.randint(0,combo) == combo:
+                return combo
 
     def list_vocabulary(self):
         vocabulary = self.get_vocabulary()
