@@ -75,7 +75,6 @@ class Commands:
     def start_questions(self, command):
         try:
             int(command)
-            print(command)
             self.vocabulary.start_questions(command)
         except ValueError:
             print("Etwas ist schiefgelaufen beim starten der Fragen!")

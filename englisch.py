@@ -32,12 +32,12 @@ class Vocabulary:
         self.connect.commit()
 
     def delete_vocabulary(self):
-        count = 1
-        for data in self.get_vocabulary():
-            print(f'{count}: {data[0]}, {data[1]}')
-            count += 1
-        if self.get_vocabulary() is not None:
-            print("True")
+        vocabulary = self.get_vocabulary()
+        if vocabulary != None:
+            count = 1
+            for data in self.get_vocabulary():
+                print(f'{count}: {data[0]}, {data[1]}')
+                count += 1
             user = input("Bitte schreiben Sie die Englische Vokabel in diese Zeile "
                          "um diese aus der Datenbank zu entfernen: ")
             self.cusor.execute('DELETE FROM vokabeln WHERE english = ?', [user])
@@ -46,47 +46,64 @@ class Vocabulary:
             print("Du hast keine Vokabeln in deiner Datenbank!")
 
     def get_vocabulary(self):
-        return self.cusor.execute('SELECT * FROM vokabeln')
+        count = 0
+        get = self.cusor.execute('SELECT * FROM vokabeln')
+        for data in get:
+            count += 1
+        if count >= 1:
+            return self.cusor.execute('SELECT * FROM vokabeln')
+        else:
+            return None
 
     def start_questions(self, minutes):
-        start = time.time()
         vocabulary = self.seach_vocabulary()
 
-        while round(time.time()-start) < int(minutes) * 60:
-            ger_or_en = random.randint(1,2)
-            rand = random.randint(0, len(vocabulary[1])-1)
-            if ger_or_en == 1:
-                print(vocabulary[0][1])
-                ger = input("Bitte schreiben Sie diese Übersetzung in diese Zeile: ")
-                if ger == vocabulary[1][rand]:
-                    print("It's correct :)")
+        if vocabulary != None:
+            start = time.time()
+            while round(time.time()-start) < int(minutes) * 60:
+                rand = random.randint(0, len(vocabulary)-1)
+                if random.randint(1,2) == 1:
+                    print(vocabulary[0][1])
+                    ger = input("Bitte schreiben Sie diese Übersetzung in diese Zeile: ")
+                    if ger == vocabulary[1][rand]:
+                        print("It's correct :)")
+                    else:
+                        print(f"Es ist Falsch! Das richtige wort wäre {vocabulary[1][rand]}")
                 else:
-                    print(f"Es ist Falsch! Das richtige wort wäre {vocabulary[1][rand]}")
-            if ger_or_en == 2:
-                print(vocabulary[1][rand])
-                en = input("Bitte schreiben Sie diese Übersetzung in diese Zeile: ")
-                if en == vocabulary[0][rand]:
-                    print("It's correct :)")
-                else:
-                    print(f"Es ist Falsch! Das richtige wort wäre {vocabulary[0][rand]}")
+                    print(vocabulary[1][rand])
+                    en = input("Bitte schreiben Sie diese Übersetzung in diese Zeile: ")
+                    if en == vocabulary[0][rand]:
+                        print("It's correct :)")
+                    else:
+                        print(f"Es ist Falsch! Das richtige wort wäre {vocabulary[0][rand]}")
+        else:
+            print("Du hast keine Vokabeln in deiner Datenbank!")
 
     def seach_vocabulary(self):
-        english_list, german_list, combo_list = [], [], []
-        for data in self.get_vocabulary():
-            english_list.append(data[0]), german_list.append(data[1]), combo_list.append(data[2])
-        return english_list, german_list, combo_list
+        vocabulary = self.get_vocabulary()
+        if vocabulary != None:
+            english_list, german_list, combo_list = [], [], []
+            for data in vocabulary:
+                english_list.append(data[0]), german_list.append(data[1]), combo_list.append(data[2])
+            return english_list, german_list, combo_list
+        else:
+            return None
 
     def create_unit(self):
         pass
 
     def list_vocabulary(self):
-        count = 1
-        for data in self.get_vocabulary():
-            print(f'{count}: {data[0]}, {data[1]}')
-            count += 1
+        vocabulary = self.get_vocabulary()
+        if vocabulary != None:
+            count = 1
+            for data in vocabulary:
+                print(f'{count}: {data[0]}, {data[1]}')
+                count += 1
+        else:
+            print("Du hast keine Vokabeln in deiner Datenbank!")
 
 
 if __name__ == "__main__":
     get = Vocabulary()
     # get.init_vocabulary()
-    print(get.seach_vocabulary())
+    print(get.start_questions(1))
