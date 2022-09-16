@@ -62,8 +62,8 @@ class Vocabulary:
             start = time.time()
             while round(time.time()-start) < int(minutes) * 60:
                 rand = self.random_voc(vocabulary)
-                if random.randint(1,2) == 1:
-                    print(vocabulary[0][1])
+                if random.randint(1, 2) == 1:
+                    print(vocabulary[0][rand])
                     ger = input("Bitte schreiben Sie diese Übersetzung in diese Zeile: ")
                     if ger == vocabulary[1][rand]:
                         vocabulary[2][rand] += 1
@@ -94,8 +94,12 @@ class Vocabulary:
             return None
 
     def random_voc(self, vocabulary):
+        count = 0
+        for i in vocabulary:
+            count += 1
+
         while True:
-            rand = random.randint(0, vocabulary[0]-1)
+            rand = random.randint(0, count-1)
             combo = vocabulary[2][rand]
             if combo >= 10:
                 vocabulary[2][rand] = 10
@@ -117,4 +121,4 @@ class Vocabulary:
 if __name__ == "__main__":
     get = Vocabulary()
     # get.init_vocabulary()
-    print(get.start_questions(1))
+    vocabulary = get.get_vocabulary()
