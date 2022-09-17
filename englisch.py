@@ -105,7 +105,7 @@ class Vocabulary:
                 vocabulary[2][rand] = 10
                 combo = 10
             if random.randint(0,combo) == combo:
-                return combo
+                return rand
 
     def list_vocabulary(self):
         vocabulary = self.get_vocabulary()
@@ -122,3 +122,4 @@ if __name__ == "__main__":
     get = Vocabulary()
     # get.init_vocabulary()
     vocabulary = get.get_vocabulary()
+    get.start_questions(1)
