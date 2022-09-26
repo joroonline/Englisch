@@ -68,18 +68,26 @@ class Vocabulary:
                     if ger == vocabulary[1][rand]:
                         vocabulary[2][rand] += 1
                         print("Es ist richtig :)")
+                        self.cusor.execute('UPDATE vokabeln SET combo = ? WHERE englisch = ?',
+                                           [vocabulary[2][rand], vocabulary[0][rand]])
                     else:
                         vocabulary[2][rand] = 0
                         print(f"Es ist Falsch! Das richtige wort wäre {vocabulary[1][rand]}")
+                        self.cusor.execute('UPDATE vokabeln SET combo = ? WHERE englisch = ?',
+                                           [vocabulary[2][rand], vocabulary[0][rand]])
                 else:
                     print(vocabulary[1][rand])
                     en = input("Bitte schreiben Sie diese Übersetzung in diese Zeile: ")
                     if en == vocabulary[0][rand]:
                         vocabulary[2][rand] += 1
                         print("It's correct :)")
+                        self.cusor.execute('UPDATE vokabeln SET combo = ? WHERE englisch = ?',
+                                           [vocabulary[2][rand], vocabulary[0][rand]])
                     else:
                         vocabulary[2][rand] = 0
                         print(f"Es ist Falsch! Das richtige wort wäre {vocabulary[0][rand]}")
+                        self.cusor.execute('UPDATE vokabeln SET combo = ? WHERE englisch = ?',
+                                           [vocabulary[2][rand], vocabulary[0][rand]])
         else:
             print("Du hast keine Vokabeln in deiner Datenbank!")
 
@@ -95,21 +103,18 @@ class Vocabulary:
 
     def random_voc(self, vocabulary):
         count = 0
-        for i in vocabulary:
+        for _ in vocabulary:
             count += 1
 
         while True:
             rand = random.randint(0, count-1)
             combo = vocabulary[2][rand]
-            if combo >= 10:
-                vocabulary[2][rand] = 10
-                combo = 10
-            if random.randint(0,combo) == combo:
+            if random.randint(0, combo) == combo:
                 return rand
 
     def list_vocabulary(self):
         vocabulary = self.get_vocabulary()
-        if vocabulary != None:
+        if vocabulary is not None:
             count = 1
             for data in vocabulary:
                 print(f'{count}: {data[0]}, {data[1]}')
